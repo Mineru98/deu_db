@@ -6,3 +6,7 @@ services:
     ports:
       - "1521:1521"
       - "5500:5500"
+    volumes:
+      - oracle-data:/u01/app/oracle
+volumes:
+  oracle-data:
