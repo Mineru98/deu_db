@@ -1,11 +1,15 @@
 # -*- coding:utf-8 -*-
 import json
+import time
 import requests
 from tqdm import tqdm
 from bs4 import BeautifulSoup
 
+from selenium import webdriver
+import chromedriver_autoinstaller
 
-def 가수수집():
+
+def 가수_공연_수집():
     result = {}
     beginPage = 1
     endPage = 1
@@ -59,7 +63,8 @@ def 가수수집():
             headers=headers,
             verify=False,
         )
-        soup = BeautifulSoup(res.content, "lxml")
+        res.encoding = "utf-8"
+        soup = BeautifulSoup(res.text, "lxml")
         tbody = soup.find("table")
         try:
             rows = list(tbody.children)
@@ -75,4 +80,81 @@ def 가수수집():
         json.dump(result, f, ensure_ascii=False, indent=4)
 
 
-가수수집()
+def 가수_곡_수집():
+    chromedriver_autoinstaller.install()
+    song_list = {}
+    with open("Artist.json", "r", encoding="utf-8") as f:
+        rows = json.load(f)
+    count = 0
+    for Artist in tqdm(list(rows.keys())):
+        song_list[Artist] = []
+        params = {
+            "strType": "2",
+            "natType": "KOR",
+            "strText": Artist,
+            "strCond": "0",
+            "searchOrderType": "",
+            "searchOrderItem": "",
+            "intPage": 1,
+        }
+
+        res = requests.get(
+            "https://www.tjmedia.com/tjsong/song_search_list.asp",
+            params=params,
+        )
+        soup = BeautifulSoup(res.content, "lxml")
+        pagination = soup.find("div", {"id": "page1"})
+        pages = pagination.find_all("a")
+        try:
+            endPage = int(pages[len(pages) - 1].text.replace("[", "").replace("]", ""))
+            for page in range(1, endPage + 1):
+                params["intPage"] = page
+                if count % 25 == 0 and count != 0:
+                    time.sleep(4)
+                res = requests.get(
+                    "https://www.tjmedia.com/tjsong/song_search_list.asp",
+                    params=params,
+                )
+                res.encoding = "utf-8"
+                soup = BeautifulSoup(
+                    res.text,
+                    "lxml",
+                )
+                table = soup.find("div", {"id": "BoardType1"})
+                rows = table.find_all("tr")[1:]
+                count += 1
+                for row in rows:
+                    song_list[Artist].append(
+                        {
+                            "song_name": row.find_all("td")[1].text,
+                            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query="
+                            + row.find_all("td")[0].text,
+                        }
+                    )
+        except:
+            pass
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("headless")
+    driver = webdriver.Chrome(options=chrome_options)
+
+    with open("SongList.json", "w", encoding="utf-8") as f:
+        json.dump(song_list, f, ensure_ascii=False, indent=4)
+
+    for key in tqdm(song_list.keys()):
+        for idx in range(len(song_list[key])):
+            song = song_list[key][idx]
+            driver.get(song["youtube_url"])
+            soup_source = BeautifulSoup(driver.page_source, "lxml")
+            try:
+                song_list[key][idx]["playtime"] = soup_source.find_all("span", {"id": "text"})[
+                    0
+                ].text
+            except:
+                pass
+
+    with open("SongList_with_playtime.json", "w", encoding="utf-8") as f:
+        json.dump(song_list, f, ensure_ascii=False, indent=4)
+
+
+if __name__ == "__main__":
+    가수_곡_수집()
