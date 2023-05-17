@@ -15,9 +15,8 @@ def 가수_공연_수집():
     endPage = 1
 
     cookies = {
-        "pcid": "168169771036894987",
-        "ASPSESSIONIDQAQSAAQC": "JEGDJIMAOLOIMGLJPJJANJBL",
-        "ASPSESSIONIDSACRARTB": "BIJABNKANMDJNBKOCPOBJEOE",
+        'ASPSESSIONIDQABRCRSB': 'HALBJOACGFEOGIBKMBHHOEIH',
+        'pcid': '168433348568136130',
         "ab.storage.deviceId.cd97b079-ff05-4967-873a-324050c2a198": "%7B%22g%22%3A%2269fc662d-cd51-e4bd-af74-ca176b081212%22%2C%22c%22%3A1681697712586%2C%22l%22%3A1683646298430%7D",
         "ab.storage.sessionId.cd97b079-ff05-4967-873a-324050c2a198": "%7B%22g%22%3A%22780c740b-4768-ba5a-ab19-b528eb613a0e%22%2C%22e%22%3A1683648101855%2C%22c%22%3A1683646298430%2C%22l%22%3A1683646301855%7D",
     }
@@ -104,8 +103,8 @@ def 가수_곡_수집():
         )
         soup = BeautifulSoup(res.content, "lxml")
         pagination = soup.find("div", {"id": "page1"})
-        pages = pagination.find_all("a")
         try:
+            pages = pagination.find_all("a")
             endPage = int(pages[len(pages) - 1].text.replace("[", "").replace("]", ""))
             for page in range(1, endPage + 1):
                 params["intPage"] = page
@@ -133,28 +132,36 @@ def 가수_곡_수집():
                     )
         except:
             pass
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("headless")
-    driver = webdriver.Chrome(options=chrome_options)
+    
 
     with open("SongList.json", "w", encoding="utf-8") as f:
         json.dump(song_list, f, ensure_ascii=False, indent=4)
-
+        
+def 곡_재생시간_수집():
+    chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_argument("headless")
+    chrome_options.add_argument("--start-minimized")
+    driver = webdriver.Chrome(options=chrome_options)
+    
+    with open("SongList.json", "r", encoding="utf-8") as f:
+        song_list = json.load(f)
+    
     for key in tqdm(song_list.keys()):
         for idx in range(len(song_list[key])):
             song = song_list[key][idx]
             driver.get(song["youtube_url"])
             soup_source = BeautifulSoup(driver.page_source, "lxml")
             try:
-                song_list[key][idx]["playtime"] = soup_source.find_all("span", {"id": "text"})[
-                    0
-                ].text
-            except:
-                pass
+                items = soup_source.find_all("span", {"id": "text"})
+                if len(items) > 0:
+                    song_list[key][idx]["playtime"] = str(items[0].text).strip()
+            except Exception as e:
+                print(e)
+                break
 
     with open("SongList_with_playtime.json", "w", encoding="utf-8") as f:
         json.dump(song_list, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
-    가수_곡_수집()
+    곡_재생시간_수집()

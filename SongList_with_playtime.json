@@ -2,19 +2,23 @@
     "바다": [
         {
             "song_name": "숨소리(난장518분페스티벌주제가)",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=96582"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=96582",
+            "playtime": "4:43"
         },
         {
             "song_name": "새로운날에",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=47754"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=47754",
+            "playtime": "4:14"
         },
         {
             "song_name": "Flower",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=46542"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=46542",
+            "playtime": "3:22"
         },
         {
             "song_name": "야광별",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=45829"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=45829",
+            "playtime": "2:59"
         },
         {
             "song_name": "Candy",
@@ -22,11 +26,13 @@
         },
         {
             "song_name": "아까워",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=39515"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=39515",
+            "playtime": "4:22"
         },
         {
             "song_name": "전화할게",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=38700"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=38700",
+            "playtime": "3:02"
         },
         {
             "song_name": "Stay(결혼의여신OST)",
@@ -34,7 +40,8 @@
         },
         {
             "song_name": "하소연",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=37122"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=37122",
+            "playtime": "3:50"
         },
         {
             "song_name": "결혼식",
@@ -42,39 +49,48 @@
         },
         {
             "song_name": "악마",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=35083"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=35083",
+            "playtime": "3:31"
         },
         {
             "song_name": "Sweet My Love(천번의입맞춤OST)",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=34543"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=34543",
+            "playtime": "4:36"
         },
         {
             "song_name": "나와같이",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=34449"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=34449",
+            "playtime": "2:51"
         },
         {
             "song_name": "나만부를수있는노래",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=34124"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=34124",
+            "playtime": "3:57"
         },
         {
             "song_name": "별빛이내린다",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=33577"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=33577",
+            "playtime": "3:56"
         },
         {
             "song_name": "내맘이말을해(Reprise)",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=33302"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=33302",
+            "playtime": "3:38"
         },
         {
             "song_name": "단한사람(제빵왕김탁구OST)",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=32860"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=32860",
+            "playtime": "4:22"
         },
         {
             "song_name": "세상저끝까지(원피스극장판10기스트롱월드OST)",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=32327"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=32327",
+            "playtime": "3:55"
         },
         {
             "song_name": "여자는울고",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=31538"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=31538",
+            "playtime": "4:12"
         },
         {
             "song_name": "Yes I'm In Love",
@@ -82,15 +98,18 @@
         },
         {
             "song_name": "MAD",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=31489"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=31489",
+            "playtime": "3:25"
         },
         {
             "song_name": "My Destiny(사랑해OST)",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=19586"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=19586",
+            "playtime": "4:34"
         },
         {
             "song_name": "Think About' Chu",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=19087"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=19087",
+            "playtime": "4:47"
         },
         {
             "song_name": "Allegro",
@@ -146,11 +165,13 @@
         },
         {
             "song_name": "Eyes",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=14024"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=14024",
+            "playtime": "4:17"
         },
         {
             "song_name": "해피페이스",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=14006"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=14006",
+            "playtime": "4:17"
         },
         {
             "song_name": "오로라",
@@ -158,7 +179,8 @@
         },
         {
             "song_name": "헤어지기전에",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12786"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12786",
+            "playtime": "4:18"
         },
         {
             "song_name": "Be mine tonight",
@@ -166,19 +188,23 @@
         },
         {
             "song_name": "Somehow, Somewhere",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12446"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12446",
+            "playtime": "4:40"
         },
         {
             "song_name": "노을",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12236"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12236",
+            "playtime": "3:58"
         },
         {
             "song_name": "그래볼께",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12210"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12210",
+            "playtime": "4:27"
         },
         {
             "song_name": "집으로오는길",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12145"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=12145",
+            "playtime": "3:53"
         },
         {
             "song_name": "Music",
@@ -4642,7 +4668,8 @@
         },
         {
             "song_name": "새로운시작",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=39443"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=39443",
+            "playtime": "5:02"
         },
         {
             "song_name": "내마음은",
@@ -7568,7 +7595,8 @@
         },
         {
             "song_name": "이별",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=4372"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=4372",
+            "playtime": "3:27"
         },
         {
             "song_name": "천년의사랑",
@@ -7580,7 +7608,8 @@
         },
         {
             "song_name": "난",
-            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=3972"
+            "youtube_url": "https://www.youtube.com/@TJKaraoke/search?query=3972",
+            "playtime": "4:31"
         },
         {
             "song_name": "썸머징글벨",
