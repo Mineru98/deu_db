@@ -179,3 +179,31 @@ def merge_json():
                 result.append(item)
     with open("playlist.json", "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
+
+
+def find_matching_dicts(arr, artist):
+    matching_dicts = []
+    for d in arr:
+        if "singer" in d and d["singer"] == artist:
+            matching_dicts.append(d)
+    return matching_dicts
+
+
+def finish():
+    with open("playlist.json", "r", encoding="utf-8") as f:
+        song_rows = json.load(f)
+
+    with open("Artist.json", "r", encoding="utf-8") as f:
+        artist_rows = json.load(f)
+
+    result = []
+
+    for artist in tqdm(artist_rows.keys()):
+        rows = find_matching_dicts(song_rows, artist)
+        concert = artist_rows[artist]
+        result.append({"artist": artist, "concert": concert, "song": rows})
+
+    result
+
+    with open("result.json", "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=2)
