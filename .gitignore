@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 .venv
 venv
+*.sql
+!0_DDL.sql
