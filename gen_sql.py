@@ -321,7 +321,7 @@ company_sql = "\n".join(
 
 result += company_sql + "\n\n"
 
-with open("./1_CREATE_Company.sql", "w", encoding="utf-8") as f:
+with open("./01_CREATE_Company.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 result = ""
@@ -379,7 +379,7 @@ artist_sql = "\n".join(
 
 result += artist_sql + "\n\n"
 
-with open("./2_CREATE_Artist.sql", "w", encoding="utf-8") as f:
+with open("./02_CREATE_Artist.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 result = ""
@@ -393,7 +393,7 @@ song_sql = "\n".join(
 
 result += song_sql + "\n\n"
 
-with open("./3_CREATE_Song.sql", "w", encoding="utf-8") as f:
+with open("./03_CREATE_Song.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 result = ""
@@ -437,7 +437,7 @@ album_sql = "\n".join(
 
 result += album_sql + "\n\n"
 
-with open("./4_CREATE_Album.sql", "w", encoding="utf-8") as f:
+with open("./04_CREATE_Album.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 result = ""
@@ -451,7 +451,7 @@ album_tract_sql = "\n".join(
 
 result += album_tract_sql + "\n\n"
 
-with open("./5_CREATE_AlbumTract.sql", "w", encoding="utf-8") as f:
+with open("./05_CREATE_AlbumTract.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 result = ""
@@ -486,7 +486,7 @@ concert_sql = "\n".join(
 
 result += concert_sql + "\n\n"
 
-with open("./6_CREATE_Concert.sql", "w", encoding="utf-8") as f:
+with open("./06_CREATE_Concert.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 result = ""
@@ -500,7 +500,7 @@ concert_tract_sql = "\n".join(
 
 result += concert_tract_sql + "\n\n"
 
-with open("./7_CREATE_ConcertTract.sql", "w", encoding="utf-8") as f:
+with open("./07_CREATE_ConcertTract.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 
@@ -547,7 +547,7 @@ fan_sql = "\n".join(
 
 result += fan_sql + "\n\n"
 
-with open("./8_CREATE_Fan.sql", "w", encoding="utf-8") as f:
+with open("./08_CREATE_Fan.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 
@@ -576,7 +576,7 @@ album_sales_sql = "\n".join(
 )
 result += album_sales_sql + "\n\n"
 
-with open("./9_CREATE_AlbumSales.sql", "w", encoding="utf-8") as f:
+with open("./09_CREATE_AlbumSales.sql", "w", encoding="utf-8") as f:
     f.writelines(result)
 
 concert_ticket_list = []
@@ -615,9 +615,7 @@ with open("./10_CREATE_ConcertTicket.sql", "w", encoding="utf-8") as f:
 sql_files = [file for file in os.listdir("./") if file.endswith(".sql") and file != "CREATE.sql"]
 sql_files.sort(reverse=False)
 
-# 결과를 저장할 파일 열기
 with open("./CREATE.sql", "w") as output:
-    # 각 .sql 파일을 읽어서 결과 파일에 작성
     for file in tqdm(sql_files):
         file_path = os.path.join("./", file)
         with open(file_path, "r") as input_file:

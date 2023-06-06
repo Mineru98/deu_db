@@ -53,4 +53,5 @@ dkms.conf
 .venv
 venv
 *.sql
-!0_DDL.sql
+!00_DDL.sql
+.DS_Store
