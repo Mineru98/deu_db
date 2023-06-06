@@ -28,7 +28,7 @@ COMMENT ON COLUMN "Company"."year_estbl" IS '설립연도';
 CREATE TABLE "Fan" (
 	"fan_id" NUMBER (20) NOT NULL,
 	"fan_name" VARCHAR2 (28) NOT NULL,
-	"gender" CHAR(2) NOT NULL,
+	"gender" CHAR(12) NOT NULL,
 	"birthday" DATE DEFAULT SYSDATE NULL,
 	"location" VARCHAR2 (28) NOT NULL
 );
@@ -187,9 +187,6 @@ ALTER TABLE "Song"
 ALTER TABLE "Artist"
 	ADD CONSTRAINT "FK_Artist_TO_Company_1" FOREIGN KEY ("company_id") REFERENCES "Company" ("company_id");
 
-ALTER TABLE "ConcertTract"
-	ADD CONSTRAINT "PK_CONCERTTRACT" PRIMARY KEY ("song_id", "concert_id");
-
 ALTER TABLE "Concert"
 	ADD CONSTRAINT "FK_Artist_TO_Concert_1" FOREIGN KEY ("artist_id") REFERENCES "Artist" ("artist_id");
 
@@ -218,13 +215,16 @@ ALTER TABLE "AlbumTract"
 	ADD CONSTRAINT "FK_Album_TO_AlbumTract_1" FOREIGN KEY ("album_id") REFERENCES "Album" ("album_id");
 
 ALTER TABLE "AlbumTract"
-	ADD CONSTRAINT "PK_ALBUMTRACT" PRIMARY KEY ("album_id", "song_id");
+	ADD CONSTRAINT "FK_Song_TO_AlbumTract_1" FOREIGN KEY ("song_id") REFERENCES "Song" ("song_id");
 
 ALTER TABLE "AlbumTract"
-	ADD CONSTRAINT "FK_Song_TO_AlbumTract_1" FOREIGN KEY ("song_id") REFERENCES "Song" ("song_id");
+	ADD CONSTRAINT "PK_ALBUMTRACT" PRIMARY KEY ("album_id", "song_id");
 
 ALTER TABLE "ConcertTract"
 	ADD CONSTRAINT "FK_Song_TO_ConcertTract_1" FOREIGN KEY ("song_id") REFERENCES "Song" ("song_id");
 
 ALTER TABLE "ConcertTract"
 	ADD CONSTRAINT "FK_Concert_TO_ConcertTract_1" FOREIGN KEY ("concert_id") REFERENCES "Concert" ("concert_id");
+	
+ALTER TABLE "ConcertTract"
+	ADD CONSTRAINT "PK_CONCERTTRACT" PRIMARY KEY ("song_id", "concert_id");

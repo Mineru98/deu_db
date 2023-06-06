@@ -279,6 +279,15 @@ def generate_random_birthday():
     return random_date.strftime("%Y-%m-%d")
 
 
+def generate_random_date_set(year: int):
+    start_date = datetime(year, 1, 1)  # 시작 날짜 설정
+    end_date = datetime(year, 12, 31)  # 종료 날짜 설정
+
+    # 시작 날짜와 종료 날짜 사이에서 랜덤으로 날짜 선택
+    random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
+
+    return random_date.strftime("%Y-%m-%d")
+
 def generate_number_array(start=10000, end=30000, step=1000):
     number_array = list(range(start, end + 1, step))
     return random.choice(number_array)
@@ -338,16 +347,15 @@ for idx, row in enumerate(rows):
         {
             "artist_id": artist_id,
             "company_id": company_idx,
-            "artist_name": row["artist"].replace("'", ""),
+            "artist_name": row["artist"].replace("'", "").replace("&", "and"),
         }
     )
     for concert in row["concert"]:
-        concert_date = "TO_DATE('" + generate_random_date() + "', 'YYYY-MM-DD')"
         concert_list.append(
             {
                 "concert_id": concert_idx,
-                "concert_title": concert.split("(")[0],
-                "concert_date": concert_date,
+                "concert_title": concert.split("(")[0].replace("&", "and"),
+                "concert_date": generate_random_date(),
                 "capacity": generate_number_array(100, 1000, 1),
                 "artist_id": artist_id,
                 "company_id": company_idx,
@@ -365,7 +373,7 @@ for idx, row in enumerate(rows):
                 {
                     "artist_id": artist_id,
                     "song_id": song_idx,
-                    "song_name": song["song_name"].replace("'", ""),
+                    "song_name": song["song_name"].replace("'", "").replace("&", "and"),
                     "play_time": play_time,
                 }
             )
@@ -411,7 +419,7 @@ for artist_id, items in group:
         album_item = {
             "album_id": album_id,
             "album_title": "앨범_" + str(album_id),
-            "album_pbl_date": "TO_DATE(" + str(random.choice(year_list)) + ", 'YYYY')",
+            "album_pbl_date": generate_random_date_set(random.choice(year_list)),
             "artist_id": artist_id,
             "company_id": artist_item[0]["company_id"],
         }
@@ -430,7 +438,7 @@ for artist_id, items in group:
 
 album_sql = "\n".join(
     [
-        f"INSERT INTO \"Album\" (\"album_id\", \"album_title\", \"album_pbl_date\", \"artist_id\", \"company_id\") VALUES ({row['album_id']}, '{row['album_title']}', {row['album_pbl_date']}, {row['artist_id']}, {row['company_id']});"
+        f"INSERT INTO \"Album\" (\"album_id\", \"album_title\", \"album_pbl_date\", \"artist_id\", \"company_id\") VALUES ({row['album_id']}, '{row['album_title']}', TO_DATE('{row['album_pbl_date']}', 'YYYY-MM-DD'), {row['artist_id']}, {row['company_id']});"
         for idx, row in enumerate(album_list)
     ]
 )
@@ -479,7 +487,7 @@ for artist_id, items in group:
 
 concert_sql = "\n".join(
     [
-        f"INSERT INTO \"Concert\" (\"concert_id\", \"concert_title\", \"concert_date\", \"capacity\", \"artist_id\", \"company_id\") VALUES ({row['concert_id']}, '{row['concert_title']}', {row['concert_date']}, {row['capacity']}, {row['artist_id']}, {row['company_id']});"
+        f"INSERT INTO \"Concert\" (\"concert_id\", \"concert_title\", \"concert_date\", \"capacity\", \"artist_id\", \"company_id\") VALUES ({row['concert_id']}, '{row['concert_title']}', TO_DATE('{row['concert_date']}', 'YYYY-MM-DD'), {row['capacity']}, {row['artist_id']}, {row['company_id']});"
         for idx, row in enumerate(concert_list)
     ]
 )
@@ -540,7 +548,7 @@ result = ""
 
 fan_sql = "\n".join(
     [
-        f"INSERT INTO \"Fan\" (\"fan_id\", \"fan_name\", \"gender\", \"birthday\", \"birthday\") VALUES ({row['fan_id']}, '{row['fan_name']}', '{row['gender']}', {row['birthday']}, '{row['location']}');"
+        f"INSERT INTO \"Fan\" (\"fan_id\", \"fan_name\", \"gender\", \"birthday\", \"location\") VALUES ({row['fan_id']}, '{row['fan_name']}', '{row['gender']}', {row['birthday']}, '{row['location']}');"
         for idx, row in enumerate(fan_list)
     ]
 )
@@ -562,7 +570,7 @@ for _, album in tqdm(enumerate(album_list), total=len(album_list)):
                 "fan_id": fan["fan_id"],
                 "album_id": album["album_id"],
                 "price": price,
-                "payment_date": album["album_pbl_date"],
+                "payment_date": generate_random_date_set(int(album["album_pbl_date"][:4])),
                 "is_canceled": generate_random_cancel(),
             }
         )
@@ -570,7 +578,7 @@ for _, album in tqdm(enumerate(album_list), total=len(album_list)):
 result = ""
 album_sales_sql = "\n".join(
     [
-        f"INSERT INTO \"AlbumSales\" (\"fan_id\", \"album_id\", \"price\", \"payment_date\", \"is_canceled\") VALUES ({row['fan_id']}, '{row['album_id']}', '{row['price']}', {row['payment_date']}, '{row['is_canceled']}');"
+        f"INSERT INTO \"AlbumSales\" (\"fan_id\", \"album_id\", \"price\", \"payment_date\", \"is_canceled\") VALUES ({row['fan_id']}, {row['album_id']}, {row['price']}, TO_DATE('{row['payment_date']}', 'YYYY-MM-DD'), {row['is_canceled']});"
         for idx, row in tqdm(enumerate(album_sales_list), total=len(album_sales_list))
     ]
 )
@@ -584,7 +592,7 @@ concert_ticket_list = []
 for idx, concert in tqdm(enumerate(concert_list), total=len(concert_list)):
     try:
         price = concert_price_dic[concert["concert_id"]]
-        for _ in range(0, random.randint(100, 1000)):
+        for i in range(0, random.randint(100, 1000)):
             sheet_level = generate_number_array(1, 4, 1)
             fan = random.choice(fan_list)
             concert_ticket_list.append(
@@ -593,8 +601,8 @@ for idx, concert in tqdm(enumerate(concert_list), total=len(concert_list)):
                     "concert_id": concert["concert_id"],
                     "ticket_price": price + sheet_level * 10000,
                     "sheet_level": sheet_level,
-                    "sheet_num": "A" + str(idx + 1),
-                    "payment_date": concert["concert_date"],
+                    "sheet_num": "A" + str(i + 1),
+                    "payment_date": generate_random_date_set(int(concert["concert_date"][:4])),
                     "is_canceled": generate_random_cancel(),
                 }
             )
@@ -603,7 +611,7 @@ for idx, concert in tqdm(enumerate(concert_list), total=len(concert_list)):
 result = ""
 concert_ticket_sql = "\n".join(
     [
-        f"INSERT INTO \"ConcertTicket\" (\"fan_id\", \"concert_id\", \"ticket_price\", \"sheet_level\", \"sheet_num\", \"payment_date\", \"is_canceled\") VALUES ({row['fan_id']}, '{row['concert_id']}', '{row['ticket_price']}', {row['sheet_level']}, {row['sheet_num']}, {row['payment_date']}, '{row['is_canceled']}');"
+        f"INSERT INTO \"ConcertTicket\" (\"fan_id\", \"concert_id\", \"ticket_price\", \"sheet_level\", \"sheet_num\", \"payment_date\", \"is_canceled\") VALUES ({row['fan_id']}, {row['concert_id']}, {row['ticket_price']}, {row['sheet_level']}, '{row['sheet_num']}', TO_DATE('{row['payment_date']}', 'YYYY-MM-DD'), {row['is_canceled']});"
         for idx, row in tqdm(enumerate(concert_ticket_list), total=len(concert_ticket_list))
     ]
 )
@@ -615,8 +623,8 @@ with open("./10_CREATE_ConcertTicket.sql", "w", encoding="utf-8") as f:
 sql_files = [file for file in os.listdir("./") if file.endswith(".sql") and file != "CREATE.sql"]
 sql_files.sort(reverse=False)
 
-with open("./CREATE.sql", "w") as output:
+with open("./CREATE.sql", "w", encoding="utf-8") as output:
     for file in tqdm(sql_files):
         file_path = os.path.join("./", file)
-        with open(file_path, "r") as input_file:
+        with open(file_path, "r", encoding="utf-8") as input_file:
             output.write(input_file.read())
