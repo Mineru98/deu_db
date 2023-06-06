@@ -1,183 +1,143 @@
-DROP TABLE "Artist";
+-- DROP TABLE "Artist";
+-- DROP TABLE "Company";
+-- DROP TABLE "Fan";
+-- DROP TABLE "Concert";
+-- DROP TABLE "Album";
+-- DROP TABLE "AlbumSales";
+-- DROP TABLE "ConcertTicket";
+-- DROP TABLE "Song";
+-- DROP TABLE "AlbumTract";
+-- DROP TABLE "ConcertTract";
 
 CREATE TABLE "Artist" (
-	"artist_id"	NUMBERIC(20)		NOT NULL,
-	"company_id"	NUMBERIC(20)		NOT NULL,
+	"artist_id"	NUMBER(20)		NOT NULL,
+	"company_id"	NUMBER(20)		NOT NULL,
 	"artist_name"	VARCHAR2(128)		NULL,
-	"solo_act_status"	BOOLEAN	DEFAULT 0	NULL
+	"solo_act_status"	NUMBER(1)		DEFAULT 0	NULL
 );
 
 COMMENT ON COLUMN "Artist"."artist_id" IS '가수 ID';
-
 COMMENT ON COLUMN "Artist"."company_id" IS '소속사 ID';
-
 COMMENT ON COLUMN "Artist"."artist_name" IS '활동명';
-
 COMMENT ON COLUMN "Artist"."solo_act_status" IS '솔로활동여부';
 
-DROP TABLE "Company";
-
 CREATE TABLE "Company" (
-	"company_id"	NUMBERIC(20)		NOT NULL,
+	"company_id"	NUMBER(20)		NOT NULL,
 	"company_name"	VARCHAR2(128)		NULL,
-	"year_estbl"	DATE	DEFAULT NOW()	NULL
+	"year_estbl"	DATE	DEFAULT SYSDATE	NULL
 );
 
 COMMENT ON COLUMN "Company"."company_id" IS '소속사 ID';
-
 COMMENT ON COLUMN "Company"."company_name" IS '회사명';
-
 COMMENT ON COLUMN "Company"."year_estbl" IS '설립연도';
 
-DROP TABLE "Fan";
-
 CREATE TABLE "Fan" (
-	"fan_id"	NUMBERIC(20)		NOT NULL,
-	"fan_name"	VCHAR(28)		NOT NULL,
+	"fan_id"	NUMBER(20)		NOT NULL,
+	"fan_name"	VARCHAR2(28)		NOT NULL,
 	"gender"	CHAR(2)		NOT NULL,
-	"birthday"	DATE	DEFAULT NOW()	NULL,
-	"location"	VCHAR(28)		NOT NULL
+	"birthday"	DATE	DEFAULT SYSDATE	NULL,
+	"location"	VARCHAR2(28)		NOT NULL
 );
 
 COMMENT ON COLUMN "Fan"."fan_id" IS '팬 ID';
-
 COMMENT ON COLUMN "Fan"."fan_name" IS '이름';
-
 COMMENT ON COLUMN "Fan"."gender" IS '성별';
-
 COMMENT ON COLUMN "Fan"."birthday" IS '생년월일';
-
 COMMENT ON COLUMN "Fan"."location" IS '거주지';
 
-DROP TABLE "Concert";
-
 CREATE TABLE "Concert" (
-	"concert_id"	NUMBERIC(20)		NOT NULL,
+	"concert_id"	NUMBER(20)		NOT NULL,
 	"concert_title"	VARCHAR2(128)		NOT NULL,
-	"concert_date"	DATE	DEFAULT NOW()	NULL,
-	"capacity"	INTEGER	DEFAULT 0	NULL,
-	"artist_id"	NUMBERIC(20)		NOT NULL,
-	"company_id"	NUMBERIC(20)		NOT NULL
+	"concert_date"	DATE	DEFAULT SYSDATE	NULL,
+	"capacity"	NUMBER	DEFAULT 0	NULL,
+	"artist_id"	NUMBER(20)		NOT NULL,
+	"company_id"	NUMBER(20)		NOT NULL
 );
 
 COMMENT ON COLUMN "Concert"."concert_id" IS '콘서트 ID';
-
 COMMENT ON COLUMN "Concert"."concert_title" IS '콘서트 제목';
-
 COMMENT ON COLUMN "Concert"."concert_date" IS '콘서트 날짜';
-
 COMMENT ON COLUMN "Concert"."capacity" IS '콘서트 최대 인원';
-
 COMMENT ON COLUMN "Concert"."artist_id" IS '가수 ID';
-
 COMMENT ON COLUMN "Concert"."company_id" IS '소속사 ID';
 
-DROP TABLE "Album";
-
 CREATE TABLE "Album" (
-	"album_id"	NUMBERIC(20)		NOT NULL,
+	"album_id"	NUMBER(20)		NOT NULL,
 	"album_title"	VARCHAR2(128)		NULL,
-	"album_pbl_date"	DATE	DEFAULT NOW()	NULL,
-	"artist_id"	NUMBERIC(20)		NOT NULL,
-	"company_id"	NUMBERIC(20)		NOT NULL
+	"album_pbl_date"	DATE	DEFAULT SYSDATE	NULL,
+	"artist_id"	NUMBER(20)		NOT NULL,
+	"company_id"	NUMBER(20)		NOT NULL
 );
 
 COMMENT ON COLUMN "Album"."album_id" IS '앨범 ID';
-
 COMMENT ON COLUMN "Album"."album_title" IS '앨범제목';
-
 COMMENT ON COLUMN "Album"."album_pbl_date" IS '앨범 공개 일시';
-
 COMMENT ON COLUMN "Album"."artist_id" IS '가수 ID';
-
 COMMENT ON COLUMN "Album"."company_id" IS '소속사 ID';
 
-DROP TABLE "AlbumSales";
-
 CREATE TABLE "AlbumSales" (
-	"album_id"	NUMBERIC(20)		NOT NULL,
-	"fan_id"	NUMBERIC(20)		NOT NULL,
-	"price"	INTEGER	DEFAULT 0	NULL,
-	"payment_date"	DATE	DEFAULT NOW()	NULL,
-	"is_canceled"	BOOLEAN	DEFAULT FALSE	NULL
+	"album_id"	NUMBER(20)		NOT NULL,
+	"fan_id"	NUMBER(20)		NOT NULL,
+	"price"	NUMBER	DEFAULT 0	NULL,
+	"payment_date"	DATE	DEFAULT SYSDATE	NULL,
+	"is_canceled"	NUMBER(1)	DEFAULT 0	NULL
 );
 
 COMMENT ON COLUMN "AlbumSales"."album_id" IS '앨범 ID';
-
 COMMENT ON COLUMN "AlbumSales"."fan_id" IS '팬 ID';
-
 COMMENT ON COLUMN "AlbumSales"."price" IS '가격';
-
 COMMENT ON COLUMN "AlbumSales"."payment_date" IS '구매날짜';
-
 COMMENT ON COLUMN "AlbumSales"."is_canceled" IS '취소여부';
 
-DROP TABLE "ConcertTicket";
 
 CREATE TABLE "ConcertTicket" (
-	"fan_id"	NUMBERIC(20)		NOT NULL,
-	"concert_id"	NUMBERIC(20)		NOT NULL,
-	"ticket_price"	INTEGER	DEFAULT 0	NULL,
+	"fan_id"	NUMBER(20)		NOT NULL,
+	"concert_id"	NUMBER(20)		NOT NULL,
+	"ticket_price"	NUMBER	DEFAULT 0	NULL,
 	"sheet_level"	VARCHAR(255)		NULL,
 	"sheet_num"	CHAR(5)		NOT NULL,
-	"payment_date"	DATE	DEFAULT NOW()	NULL,
-	"is_canceled"	BOOLEAN	DEFAULT FALSE	NULL
+	"payment_date"	DATE	DEFAULT SYSDATE	NULL,
+	"is_canceled"	NUMBER(1)	DEFAULT 0	NULL
 );
 
 COMMENT ON COLUMN "ConcertTicket"."fan_id" IS '팬 ID';
-
 COMMENT ON COLUMN "ConcertTicket"."concert_id" IS '콘서트 ID';
-
 COMMENT ON COLUMN "ConcertTicket"."ticket_price" IS '가격';
-
 COMMENT ON COLUMN "ConcertTicket"."sheet_level" IS '좌석등급';
-
 COMMENT ON COLUMN "ConcertTicket"."sheet_num" IS '좌석번호';
-
 COMMENT ON COLUMN "ConcertTicket"."payment_date" IS '구매날짜';
-
 COMMENT ON COLUMN "ConcertTicket"."is_canceled" IS '취소여부';
 
-DROP TABLE "Song";
 
 CREATE TABLE "Song" (
-	"song_id"	NUMBERIC(20)		NOT NULL,
+	"song_id"	NUMBER(20)		NOT NULL,
 	"song_name"	VARCHAR2(128)		NOT NULL,
-	"play_time"	INTEGER	DEFAULT 0	NULL
+	"play_time"	NUMBER	DEFAULT 0	NULL
 );
 
 COMMENT ON COLUMN "Song"."song_id" IS '노래 ID';
-
 COMMENT ON COLUMN "Song"."song_name" IS '노래제목';
-
 COMMENT ON COLUMN "Song"."play_time" IS '재생시간';
 
-DROP TABLE "AlbumTract";
 
 CREATE TABLE "AlbumTract" (
-	"album_id"	NUMBERIC(20)		NOT NULL,
-	"song_id"	NUMBERIC(20)		NOT NULL,
-	"order_num"	INTEGER		NOT NULL
+	"album_id"	NUMBER(20)		NOT NULL,
+	"song_id"	NUMBER(20)		NOT NULL,
+	"order_num"	NUMBER		NOT NULL
 );
 
 COMMENT ON COLUMN "AlbumTract"."album_id" IS '앨범 ID';
-
 COMMENT ON COLUMN "AlbumTract"."song_id" IS '노래 ID';
-
 COMMENT ON COLUMN "AlbumTract"."order_num" IS '수록순서';
 
-DROP TABLE "ConcertTract";
-
 CREATE TABLE "ConcertTract" (
-	"song_id"	NUMBERIC(20)		NOT NULL,
-	"concert_id"	NUMBERIC(20)		NOT NULL,
-	"order_num"	INTEGER		NOT NULL
+	"song_id"	NUMBER(20)		NOT NULL,
+	"concert_id"	NUMBER(20)		NOT NULL,
+	"order_num"	NUMBER		NOT NULL
 );
 
 COMMENT ON COLUMN "ConcertTract"."song_id" IS '노래 ID';
-
 COMMENT ON COLUMN "ConcertTract"."concert_id" IS '콘서트 ID';
-
 COMMENT ON COLUMN "ConcertTract"."order_num" IS '진행 순서';
 
 ALTER TABLE "Artist" ADD CONSTRAINT "PK_ARTIST" PRIMARY KEY (
